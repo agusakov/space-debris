@@ -41,7 +41,7 @@ public class SpaceObject implements Serializable{
     public double yVel = 0;
     public double xAccel;
     public double yAccel;
-    public double accelConstant;
+    //public double accelConstant;
 
     public int originX;
     public int originY;
@@ -65,21 +65,21 @@ public class SpaceObject implements Serializable{
         return yAccel*t + yVel0;
     }
 
-    public double xAccel(double t) {
+    /*public double xAccel(double t) {
         return accelConstant * yVel/(Math.sqrt(xVel*xVel + yVel + yVel));
     }
 
     public double yAccel(double t) {
         return accelConstant * xVel/(Math.sqrt(xVel*xVel + yVel + yVel));
-    }
+    }*/
 
     public void move(double t) {
         xVel = this.xVel(t);
         yVel = this.yVel(t);
-        xAccel = this.xAccel(t);
-        yAccel = this.yAccel(t);
+        /*xAccel = this.xAccel(t);
+        yAccel = this.yAccel(t);*/
         xLocation = (int) this.xPos(t) + originX;
-        yLocation = - (int) this.yPos(t) + originX;
+        yLocation = (int) this.yPos(t) + originY;
         System.out.println("x: " + xLocation + " y: " + yLocation);
 	}
 	
