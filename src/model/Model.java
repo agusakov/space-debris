@@ -19,6 +19,8 @@ import java.util.Comparator;
 import java.io.Serializable;
 
 public class Model implements Serializable{
+	public final static double PI = 3.14159;
+
 	public final static int WORLD_WIDTH = 1366;
 	public final static int WORLD_HEIGHT = 768;
 
@@ -30,7 +32,10 @@ public class Model implements Serializable{
 
 	public ArrayList<SpaceObject> spaceObjects = new ArrayList<>();
 	
-	public Earth earth;
+	//public Earth earth;
+	//public Satellite satellite;
+	public boolean started = false;
+	public Simulation sim = new Simulation();
 
 	
 	public Model(int frameWidth, int frameHeight) {
@@ -43,7 +48,7 @@ public class Model implements Serializable{
 	public void createSpaceObjects() {
 		spaceObjects.clear();
 		Earth earth = new Earth(originX, originY, frameWidth, frameHeight, 256, 256);
-		Satellite satellite = new Satellite(originX, originY, 0, 9, 9, 0, 200, -200, frameWidth, frameHeight, 64, 64);
+		Satellite satellite = new Satellite(originX, originY, 0, 0, 0, 9, 9, 0, frameWidth, frameHeight, 64, 64);
 
 		spaceObjects.add(earth);
 		spaceObjects.add(satellite);
@@ -52,7 +57,25 @@ public class Model implements Serializable{
 	}
 
 	public void updateSimulation() {
-		createSpaceObjects();
+		//System.out.println("in updateSimulation()");
+		if (!started) {
+			//System.out.println("creating space objects");
+			createSpaceObjects();
+			//System.out.println("starting simulation");
+			sim.startSimulation();
+			//System.out.println("simulation started");
+			started = true;
+		}
+		else {
+			//System.out.println("updating time in simulation");
+			sim.updateTime();
+			//System.out.println("moving space objects");
+			for (SpaceObject a : spaceObjects) {
+				if (a.moves) {
+					a.move(sim.elapsedTime);
+				}
+			}
+		}
 	}
 
 	public ArrayList<SpaceObject> getSpaceObjects() {

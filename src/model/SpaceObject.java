@@ -32,10 +32,16 @@ public class SpaceObject implements Serializable{
     public int xOffset;
     public int yOffset;
    
-    public float xVel;
-    public float yVel;
-    public float xAccel;
-    public float yAccel;
+    public double xVel0;
+    public double yVel0;
+    public double xLoc0;
+    public double yLoc0;
+
+    public double xVel = 0;
+    public double yVel = 0;
+    public double xAccel;
+    public double yAccel;
+    public double accelConstant;
 
     public int originX;
     public int originY;
@@ -43,9 +49,38 @@ public class SpaceObject implements Serializable{
     public Image spaceObjectImage;
     public int frameCount;
     
-    public void move() {
-		xLocation += xVel;
-		yLocation -= yVel;
+    public double xPos(double t){
+        return 1/2*xAccel*t*t + xVel*t + xLoc0;
+    }
+
+    public double yPos(double t){
+        return 1/2*yAccel*t*t + yVel0*t + yLoc0;
+    }
+
+    public double xVel(double t) {
+        return xAccel*t + xVel0;
+    }
+
+    public double yVel(double t) {
+        return yAccel*t + yVel0;
+    }
+
+    public double xAccel(double t) {
+        return accelConstant * yVel/(Math.sqrt(xVel*xVel + yVel + yVel));
+    }
+
+    public double yAccel(double t) {
+        return accelConstant * xVel/(Math.sqrt(xVel*xVel + yVel + yVel));
+    }
+
+    public void move(double t) {
+        xVel = this.xVel(t);
+        yVel = this.yVel(t);
+        xAccel = this.xAccel(t);
+        yAccel = this.yAccel(t);
+        xLocation = (int) this.xPos(t) + originX;
+        yLocation = - (int) this.yPos(t) + originX;
+        System.out.println("x: " + xLocation + " y: " + yLocation);
 	}
 	
 	public int getX() {
