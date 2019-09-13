@@ -50,19 +50,19 @@ public class SpaceObject implements Serializable{
     public int frameCount;
     
     public double xPos(double t){
-        return 1/2*xAccel*t*t + xVel*t + xLoc0;
+        return -1/2*Math.cos(t)*t*t - Math.sin(t)*t + xLoc0;
     }
 
     public double yPos(double t){
-        return 1/2*yAccel*t*t + yVel0*t + yLoc0;
+        return -1/2*Math.sin(t)*t*t + Math.cos(t)*t + yLoc0;
     }
 
     public double xVel(double t) {
-        return xAccel*t + xVel0;
+        return Math.sin(t)*t + xVel0;
     }
 
     public double yVel(double t) {
-        return yAccel*t + yVel0;
+        return -Math.cos(t)*t + yVel0;
     }
 
     /*public double xAccel(double t) {
@@ -78,10 +78,18 @@ public class SpaceObject implements Serializable{
         yVel = this.yVel(t);
         /*xAccel = this.xAccel(t);
         yAccel = this.yAccel(t);*/
-        xLocation = (int) this.xPos(t) + originX;
-        yLocation = (int) this.yPos(t) + originY;
+        this.setX((int) this.xPos(t) + originX);
+        this.setY((int) this.yPos(t) + originY);
         System.out.println("x: " + xLocation + " y: " + yLocation);
-	}
+    }
+    
+    public double xTheta(double t) {
+        return Math.cos(t);
+    }
+
+    public double yTheta(double t) {
+        return Math.sin(t);
+    }
 	
 	public int getX() {
 		return this.xLocation + this.originX;
