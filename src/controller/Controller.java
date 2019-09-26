@@ -32,7 +32,7 @@ public class Controller {
 
 			for(SpaceObject a : model.getSpaceObjects()){
 				view.addSpaceObject(a.getImage(),
-					new Point(a.getX(), a.getY()),
+					new Point((int)a.getX(), (int)a.getY()),
 					a.getFrameCount(),
 					new Dimension(a.imgWidth, a.imgHeight));
 					/*a.getDirection(),*/

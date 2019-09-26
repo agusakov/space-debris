@@ -22,20 +22,25 @@ public class Satellite extends SpaceObject implements Serializable {
 	* @param xBoundary x-position where main environment ends on screen
 	* @param yBoundary y-position where secondary environments collide on screen
 	*/
-	public Satellite(int originX, int originY, int x, int y, int xVel, int yVel, double xAccel, double yAccel, int frameWidth, int frameHeight, int imgWidth, int imgHeight) {
+	public Satellite(int originX, int originY, int xOffset, int yOffset, int xVel, int yVel, int frameWidth, int frameHeight, int imgWidth, int imgHeight) {
 		this.name = "Earth";
-		this.xLoc0 = x + originX;
-		this.yLoc0 = - y + originY;
+		//this.xLoc0 = xOffset + originX;
+		//this.yLoc0 = yOffset + originY;
+		this.originX = originX;
+		this.originY = originY;
 		
-		this.xLocation = x + originX;
-        this.yLocation = - y + originY;
+		//System.out.println("initial x:" + (xOffset + originX));
+		this.xLocation = xOffset + originX;
+		//System.out.println("initial x:" + this.xLocation);
+		this.yLocation = yOffset + originY;
+		//System.out.println("initial y:" + this.yLocation);
         
-        this.xOffset = x;
-        this.yOffset = - y;
+        this.xOffset = xOffset;
+        this.yOffset = yOffset;
 		this.xVel0 = xVel;
 		this.yVel0 = yVel;
-		this.xAccel = xAccel;
-		this.yAccel = yAccel;
+		//this.xAccel = this.xAccel(0);
+		//this.yAccel = this.yAccel(0);
 		//this.accelConstant = Math.sqrt(xAccel*xAccel + yAccel*yAccel);
         
 		//this.dir = d;
@@ -46,6 +51,8 @@ public class Satellite extends SpaceObject implements Serializable {
 		this.moves = true;
 		this.spaceObjectImage = Image.SATELLITE;
 		this.frameCount = 1;
+		System.out.println("initial x:" + this.xLocation);
+		System.out.println("initial y:" + this.yLocation);
 	}
 
 }

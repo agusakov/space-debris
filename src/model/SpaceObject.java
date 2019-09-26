@@ -19,7 +19,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.io.Serializable;
 
-public class SpaceObject implements Serializable{
+public class SpaceObject implements Serializable {
+    public final static double PI = 3.14159;
     public String name;
     public int frameWidth;
 	public int frameHeight;
@@ -27,21 +28,25 @@ public class SpaceObject implements Serializable{
 	public int imgHeight;
     public boolean moves;
     
-    public int xLocation;
-    public int yLocation;
-    public int xOffset;
-    public int yOffset;
-   
+    public double xLocation;
+    public double yLocation;
+    public double xOffset;
+    public double yOffset;
+
+    public ArrayList<Point> forces = new ArrayList<>();
+    
+    public double mass;
+
     public double xVel0;
     public double yVel0;
     public double xLoc0;
     public double yLoc0;
 
-    public double xVel = 0;
-    public double yVel = 0;
+    public double xVel;
+    public double yVel;
     public double xAccel;
     public double yAccel;
-    //public double accelConstant;
+    public double accelConstant = 1;
 
     public int originX;
     public int originY;
@@ -50,61 +55,65 @@ public class SpaceObject implements Serializable{
     public int frameCount;
     
     public double xPos(double t){
-        return -1/2*Math.cos(t)*t*t - Math.sin(t)*t + xLoc0;
+        return 1/2*xAccel*t*t + xVel*t + xOffset;
     }
 
     public double yPos(double t){
-        return -1/2*Math.sin(t)*t*t + Math.cos(t)*t + yLoc0;
+        return 1/2*yAccel*t*t + yVel*t + yOffset;
     }
 
     public double xVel(double t) {
-        return Math.sin(t)*t + xVel0;
+        return xAccel*t + xVel;
     }
 
     public double yVel(double t) {
-        return -Math.cos(t)*t + yVel0;
+        return yAccel*t + yVel;
     }
 
-    /*public double xAccel(double t) {
-        return accelConstant * yVel/(Math.sqrt(xVel*xVel + yVel + yVel));
+    public double accel(double t) {
+        return accelConstant/(xOffset*xOffset + yOffset*yOffset);
+    }
+
+    public double xAccel(double t) {
+        return -0.001*xOffset/(xOffset*xOffset + yOffset*yOffset);
     }
 
     public double yAccel(double t) {
-        return accelConstant * xVel/(Math.sqrt(xVel*xVel + yVel + yVel));
-    }*/
+        return -0.001*yOffset/(xOffset*xOffset + yOffset*yOffset);
+    }
 
     public void move(double t) {
-        xVel = this.xVel(t);
-        yVel = this.yVel(t);
-        /*xAccel = this.xAccel(t);
-        yAccel = this.yAccel(t);*/
-        this.setX((int) this.xPos(t) + originX);
-        this.setY((int) this.yPos(t) + originY);
-        System.out.println("x: " + xLocation + " y: " + yLocation);
-    }
-    
-    public double xTheta(double t) {
-        return Math.cos(t);
-    }
-
-    public double yTheta(double t) {
-        return Math.sin(t);
+        System.out.println("time t:" + t);
+        this.xAccel = this.xAccel(t);
+        this.yAccel = this.yAccel(t);
+        System.out.println("xAccel:" + this.xAccel);
+        this.xVel = this.xVel(t);
+        this.yVel = this.yVel(t);
+        System.out.println("xVel:" + this.xVel);
+        this.setX((int) this.xPos(t));
+        this.setY((int) this.yPos(t));
+        System.out.println("xLocation: " + xLocation + " yLocation: " + yLocation);
+        System.out.println("xOffset: " + xOffset + " yOffset: " + yOffset);
     }
 	
-	public int getX() {
-		return this.xLocation + this.originX;
+	public double getX() {
+		return this.xLocation;
 	}
 	
-	public int getY() {
-		return this.yLocation + this.originY;
+	public double getY() {
+		return this.yLocation;
     }
 
     public void setX(int x) {
         this.xLocation = x + originX;
+        System.out.println("originX:" + this.originX);
+        System.out.println("setting xLocation:" + this.xLocation);
+        this.xOffset = x;
     }
 
     public void setY(int y) {
-        this.yLocation = y + originY;
+        this.yLocation = originY + y;
+        this.yOffset = y;
     }
 
     public int getFrameCount() {
