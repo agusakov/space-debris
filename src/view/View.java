@@ -103,7 +103,7 @@ public class View extends JPanel{
 		else{
 			this.worldScale = (float) this.getWidth()/worldWidth;
 		}
-		frame.getContentPane().setBackground(Color.black);
+		panelEnvironment.setBackground(Color.black);
 		//g.drawImage(images.get(Image.TITLESCREEN).get(0), 0, 0, this.getWidth(), this.getHeight(), this);
     	//picNum = (picNum + 1) % frameCount;
 		displaySpaceObjects(g);

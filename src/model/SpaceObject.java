@@ -55,31 +55,43 @@ public class SpaceObject implements Serializable {
     public int frameCount;
     
     public double xPos(double t){
-        return 1/2*xAccel*t*t + xVel*t + xOffset;
+        return xOffset + xVel*t + 1/2*xAccel*t*t;
     }
 
     public double yPos(double t){
-        return 1/2*yAccel*t*t + yVel*t + yOffset;
+        return yOffset + yVel*t + 1/2*yAccel*t*t ;
     }
 
     public double xVel(double t) {
-        return xAccel*t + xVel;
+        return xVel + xAccel*t ;
     }
 
     public double yVel(double t) {
-        return yAccel*t + yVel;
+        return yVel + yAccel*t;
     }
 
     public double accel(double t) {
-        return accelConstant/(xOffset*xOffset + yOffset*yOffset);
+        return 1000/(xOffset*xOffset + yOffset*yOffset + 0.001);
     }
 
     public double xAccel(double t) {
-        return -0.001*xOffset/(xOffset*xOffset + yOffset*yOffset);
+        xAccel =  -10*xOffset/(xOffset*xOffset + yOffset*yOffset);
+        if(Double.isNaN(xAccel)) {
+            return 0;
+        }
+        else {
+            return xAccel;
+        }
     }
 
     public double yAccel(double t) {
-        return -0.001*yOffset/(xOffset*xOffset + yOffset*yOffset);
+        yAccel =  -10*yOffset/(xOffset*xOffset + yOffset*yOffset);
+        if(Double.isNaN(yAccel)) {
+            return 0;
+        }
+        else {
+            return yAccel;
+        }
     }
 
     public void move(double t) {
