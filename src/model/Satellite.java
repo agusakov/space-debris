@@ -37,8 +37,8 @@ public class Satellite extends SpaceObject implements Serializable {
         
         this.xOffset = xOffset;
         this.yOffset = yOffset;
-		this.xVel0 = xVel;
-		this.yVel0 = yVel;
+		this.xVel = xVel;
+		this.yVel = yVel;
 		//this.xAccel = this.xAccel(0);
 		//this.yAccel = this.yAccel(0);
 		//this.accelConstant = Math.sqrt(xAccel*xAccel + yAccel*yAccel);

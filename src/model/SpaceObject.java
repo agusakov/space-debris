@@ -44,8 +44,8 @@ public class SpaceObject implements Serializable {
 
     public double xVel;
     public double yVel;
-    public double xAccel;
-    public double yAccel;
+    public double xAccel = 0;
+    public double yAccel = -1;
     public double accelConstant = 1;
 
     public int originX;
@@ -55,11 +55,11 @@ public class SpaceObject implements Serializable {
     public int frameCount;
     
     public double xPos(double t){
-        return xOffset + xVel*t + 1/2*xAccel*t*t;
+        return xOffset + xVel*t - 1/2*xAccel*t*t;
     }
 
     public double yPos(double t){
-        return yOffset + yVel*t + 1/2*yAccel*t*t ;
+        return yOffset + yVel*t - 1/2*yAccel*t*t ;
     }
 
     public double xVel(double t) {
@@ -67,7 +67,7 @@ public class SpaceObject implements Serializable {
     }
 
     public double yVel(double t) {
-        return yVel + yAccel*t;
+        return yVel - yAccel*t;
     }
 
     public double accel(double t) {
@@ -96,8 +96,8 @@ public class SpaceObject implements Serializable {
 
     public void move(double t) {
         System.out.println("time t:" + t);
-        this.xAccel = this.xAccel(t);
-        this.yAccel = this.yAccel(t);
+        //this.xAccel = this.xAccel(t);
+        //this.yAccel = this.yAccel(t);
         System.out.println("xAccel:" + this.xAccel);
         this.xVel = this.xVel(t);
         this.yVel = this.yVel(t);
