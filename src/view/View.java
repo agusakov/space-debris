@@ -135,8 +135,8 @@ public class View extends JPanel{
 			drawImage(g,
 				spaceObjectImages.get(i),
 				picNum%(spaceObjectFrameCt.get(i)),
-				spaceObjectLocations.get(i).x,
-				spaceObjectLocations.get(i).y,
+				(int)spaceObjectLocations.get(i).x,
+				(int)spaceObjectLocations.get(i).y,
 				spaceObjectDimension.get(i).width,
 				spaceObjectDimension.get(i).height);
 		}
