@@ -22,12 +22,13 @@ public class Satellite extends SpaceObject implements Serializable {
 	* @param xBoundary x-position where main environment ends on screen
 	* @param yBoundary y-position where secondary environments collide on screen
 	*/
-	public Satellite(int originX, int originY, int xOffset, int yOffset, int xVel, int yVel, int frameWidth, int frameHeight, int imgWidth, int imgHeight) {
+	public Satellite(int originX, int originY, int xOffset, int yOffset, int xVel, int yVel, int frameWidth, int frameHeight, int imgWidth, int imgHeight, double mass) {
 		this.name = "Earth";
 		//this.xLoc0 = xOffset + originX;
 		//this.yLoc0 = yOffset + originY;
 		this.originX = originX;
 		this.originY = originY;
+		this.mass = mass;
 		
 		//System.out.println("initial x:" + (xOffset + originX));
 		this.xLocation = xOffset + originX;
@@ -36,9 +37,11 @@ public class Satellite extends SpaceObject implements Serializable {
 		//System.out.println("initial y:" + this.yLocation);
         
         this.xOffset = xOffset;
-        this.yOffset = yOffset;
+		this.yOffset = yOffset;
+		//this.zOffset = zOffset;
 		this.xVel = xVel;//this.unifCircXVel();
 		this.yVel = yVel;//this.unifCircYVel();
+		//this.zVel = zVel;
 		//this.xAccel = this.xAccel(0);
 		//this.yAccel = this.yAccel(0);
 		//this.accelConstant = Math.sqrt(xAccel*xAccel + yAccel*yAccel);

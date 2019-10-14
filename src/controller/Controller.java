@@ -34,7 +34,7 @@ public class Controller {
 				view.addSpaceObject(a.getImage(),
 					new Point((int)a.getX(), (int)a.getY()),
 					a.getFrameCount(),
-					new Dimension(a.imgWidth, a.imgHeight));
+					new Dimension(a.imgWidth /**(int)a.getZ()*/, a.imgHeight /** (int)a.getZ()*/));
 					/*a.getDirection(),*/
 					//new Dimension(a.imgWidth, a.imgHeight));
 			}
