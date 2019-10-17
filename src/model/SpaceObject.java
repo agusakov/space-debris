@@ -37,8 +37,8 @@ public class SpaceObject implements Serializable {
 
     public ArrayList<Point> forces = new ArrayList<>();
     
-    public double gravConstant = 10;//6.674e-11;
-    public double earthMass = 1000;//5.972e24;
+    public double gravConstant = 6.674e-11;
+    public double earthMass = 5.972e24;
     public double mass;
 
     public double xVel0;
@@ -139,7 +139,7 @@ public class SpaceObject implements Serializable {
     
     public double gravAccelScalar(double radius) {
         if (radius != 0.0) {
-            return -gravConstant*earthMass/(radius*radius);
+            return -gravConstant*earthMass*mass/(radius*radius);
         }
         else {
             return 0;
@@ -224,14 +224,14 @@ public class SpaceObject implements Serializable {
     }
 
     public void setX(double x) {
-        this.xLocation = (x + originX);
+        this.xLocation = (x/10e10 + originX);
         System.out.println("originX:" + this.originX);
         System.out.println("setting xLocation:" + this.xLocation);
         this.xOffset = x;
     }
 
     public void setY(double y) {
-        this.yLocation = (originY + y);
+        this.yLocation = (originY + y/10e10);
         this.yOffset = y;
     }
 

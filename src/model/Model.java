@@ -48,7 +48,7 @@ public class Model implements Serializable{
 	public void createSpaceObjects() {
 		spaceObjects.clear();
 		Earth earth = new Earth(this.earthOriginX, this.earthOriginY, frameWidth, frameHeight, 256, 256);
-		Satellite satellite = new Satellite(this.earthOriginX + 96, this.earthOriginY + 96, -100, 100, 10, 0, frameWidth, frameHeight, 64, 64, 100);
+		Satellite satellite = new Satellite(this.earthOriginX + 96, this.earthOriginY + 96, -1000, 1000, 1000, 1000, frameWidth, frameHeight, 64, 64, 100);
 
 		spaceObjects.add(earth);
 		spaceObjects.add(satellite);

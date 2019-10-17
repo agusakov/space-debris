@@ -131,7 +131,7 @@ public class View extends JPanel{
 		//}
 
 		for (int i = 0; i < spaceObjectImages.size(); i++) {
-			//System.println("getting" + spaceObjectImages.get(i));
+			System.out.println("drawing at x:" + spaceObjectLocations.get(i).x + " y:" + spaceObjectLocations.get(i).y);
 			drawImage(g,
 				spaceObjectImages.get(i),
 				picNum%(spaceObjectFrameCt.get(i)),
