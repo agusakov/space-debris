@@ -22,7 +22,7 @@ public class Satellite extends SpaceObject implements Serializable {
 	* @param xBoundary x-position where main environment ends on screen
 	* @param yBoundary y-position where secondary environments collide on screen
 	*/
-	public Satellite(int originX, int originY, int xOffset, int yOffset, int xVel, int yVel, int frameWidth, int frameHeight, int imgWidth, int imgHeight, double mass) {
+	public Satellite(int originX, int originY, double xOffset, double yOffset, int xVel, int yVel, int frameWidth, int frameHeight, int imgWidth, int imgHeight, double mass) {
 		this.name = "Earth";
 		//this.xLoc0 = xOffset + originX;
 		//this.yLoc0 = yOffset + originY;
