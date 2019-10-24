@@ -37,9 +37,9 @@ public class SpaceObject implements Serializable {
 
     public ArrayList<Point> forces = new ArrayList<>();
     
-    public double gravConstant = 10;//6.674e-11;
-    public double earthMass = 1000;//5.972e24;
-    public double mass;
+    public double gravConstant = 6.674e-11; // m^3/(kg^2 s^2)
+    public double earthMass = 5.972e24; // kg
+    public double mass; //kg
 
     public double xVel0;
     public double yVel0;
@@ -98,11 +98,11 @@ public class SpaceObject implements Serializable {
     }*/
 
     public double xVel(double normX, double gravAccelScalar){
-        return this.xVel + normX*gravAccelScalar;
+        return this.xVel + normX*gravAccelScalar*10e-3;
     }
 
     public double yVel(double normY, double gravAccelScalar){
-        return this.yVel + normY*gravAccelScalar;
+        return this.yVel + normY*gravAccelScalar*10e-3;
     }
 
   /*  public double zVel(double normZ, double gravAccelScalar){
@@ -110,11 +110,11 @@ public class SpaceObject implements Serializable {
     }*/
 
     public double xPos(double x, double xVel) {
-        return x + xVel;
+        return x + xVel*10e-3;
     }
 
     public double yPos(double y, double yVel) {
-        return y + yVel;
+        return y + yVel*10e-3;
     }
 
    /* public double zPos(double z, double zVel) {
@@ -166,7 +166,7 @@ public class SpaceObject implements Serializable {
 
     public double potentialEnergy() {
         if (radius != 0.0) {
-            return gravConstant*(mass)*(radius);
+            return gravConstant*(mass)*earthMass/(radius);
         }
         else {
             return 0;
@@ -178,24 +178,24 @@ public class SpaceObject implements Serializable {
     }
 
     public void move(double t) {
-        System.out.println("time t:" + t);
+        //System.out.println("time t:" + t);
         //this.xAccel = this.xAccel(t);
         //this.yAccel = this.yAccel(t);
         //this.angAccel = this.angAccel(t);
         this.radius = radius(this.xOffset, this.yOffset);
-        System.out.println("radius:" + radius);
+        //System.out.println("radius:" + radius);
         this.gravAccelScalar = gravAccelScalar(radius);
-        System.out.println("gravAccelScalar:" + gravAccelScalar);
+        //System.out.println("gravAccelScalar:" + gravAccelScalar);
         this.normX = normX(this.xOffset, radius);
-        System.out.println("normX:" + normX);
+        //System.out.println("normX:" + normX);
         this.normY = normY(this.yOffset, radius);
-        System.out.println("normY:" + normY);
+        //System.out.println("normY:" + normY);
         //this.normZ = normZ(this.zOffset, radius);
         //System.out.println("normZ:" + normZ);
         this.xVel = xVel(normX, gravAccelScalar);
-        System.out.println("xVel:" + xVel);
+        //System.out.println("xVel:" + xVel);
         this.yVel = yVel(normY, gravAccelScalar);
-        System.out.println("yVel:" + yVel);
+        //System.out.println("yVel:" + yVel);
         //this.yVel = zVel(normZ, gravAccelScalar);
         //System.out.println("zVel:" + zVel);
         this.kineticEnergy = kineticEnergy();
@@ -207,8 +207,8 @@ public class SpaceObject implements Serializable {
         this.setX(this.xPos(this.xOffset, this.xVel));
         this.setY(this.yPos(this.yOffset, this.yVel));
         //this.setZ(this.zPos(this.zOffset, this.zVel));
-        System.out.println("xLocation: " + xLocation + " yLocation: " + yLocation);
-        System.out.println("xOffset: " + xOffset + " yOffset: " + yOffset);
+        //System.out.println("xLocation: " + xLocation + " yLocation: " + yLocation);
+        //System.out.println("xOffset: " + xOffset + " yOffset: " + yOffset);
     }
 	
 	public double getX() {
@@ -224,14 +224,14 @@ public class SpaceObject implements Serializable {
     }
 
     public void setX(double x) {
-        this.xLocation = (x + originX);
-        System.out.println("originX:" + this.originX);
+        this.xLocation = (x*10e-3 + originX);
+       // System.out.println("originX:" + this.originX);
         System.out.println("setting xLocation:" + this.xLocation);
         this.xOffset = x;
     }
 
     public void setY(double y) {
-        this.yLocation = (originY + y);
+        this.yLocation = (originY + y*10e-3);
         this.yOffset = y;
     }
 
