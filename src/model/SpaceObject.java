@@ -37,9 +37,9 @@ public class SpaceObject implements Serializable {
 
     public ArrayList<Point> forces = new ArrayList<>();
     
-    public double gravConstant = 6.674e-11;
-    public double earthMass = 5.972e24;
-    public double mass;
+    public double gravConstant = 6.674e-11; //m^3 kg^-1 s^-2
+    public double earthMass = 5.972e24; //kg
+    public double mass; //kg
 
     public double xVel0;
     public double yVel0;
@@ -98,11 +98,11 @@ public class SpaceObject implements Serializable {
     }*/
 
     public double xVel(double normX, double gravAccelScalar){
-        return this.xVel + normX*gravAccelScalar;
+        return this.xVel + normX*gravAccelScalar*100;
     }
 
     public double yVel(double normY, double gravAccelScalar){
-        return this.yVel + normY*gravAccelScalar;
+        return this.yVel + normY*gravAccelScalar*100;
     }
 
   /*  public double zVel(double normZ, double gravAccelScalar){
@@ -110,11 +110,11 @@ public class SpaceObject implements Serializable {
     }*/
 
     public double xPos(double x, double xVel) {
-        return x + xVel;
+        return x + xVel*100;
     }
 
     public double yPos(double y, double yVel) {
-        return y + yVel;
+        return y + yVel*100;
     }
 
    /* public double zPos(double z, double zVel) {
@@ -224,14 +224,14 @@ public class SpaceObject implements Serializable {
     }
 
     public void setX(double x) {
-        this.xLocation = (x/10e10 + originX);
+        this.xLocation = (x/10e5 + originX);
         System.out.println("originX:" + this.originX);
         System.out.println("setting xLocation:" + this.xLocation);
         this.xOffset = x;
     }
 
     public void setY(double y) {
-        this.yLocation = (originY + y/10e10);
+        this.yLocation = (originY + y/10e5);
         this.yOffset = y;
     }
 
