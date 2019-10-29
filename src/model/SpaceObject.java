@@ -224,14 +224,14 @@ public class SpaceObject implements Serializable {
     }
 
     public void setX(double x) {
-        this.xLocation = (x/10e5 + originX);
+        this.xLocation = (x/20e4 + originX);
         System.out.println("originX:" + this.originX);
         System.out.println("setting xLocation:" + this.xLocation);
         this.xOffset = x;
     }
 
     public void setY(double y) {
-        this.yLocation = (originY + y/10e5);
+        this.yLocation = (originY + y/20e4);
         this.yOffset = y;
     }
 

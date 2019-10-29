@@ -31,9 +31,9 @@ public class Satellite extends SpaceObject implements Serializable {
 		this.mass = mass;
 		
 		//System.out.println("initial x:" + (xOffset + originX));
-		this.xLocation = xOffset*10e5 + originX;
+		this.xLocation = xOffset/20e4 + originX;
 		//System.out.println("initial x:" + this.xLocation);
-		this.yLocation = yOffset*10e5 + originY;
+		this.yLocation = yOffset/20e4 + originY;
 		//System.out.println("initial y:" + this.yLocation);
         
         this.xOffset = xOffset;

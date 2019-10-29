@@ -41,14 +41,14 @@ public class Model implements Serializable{
 	public Model(int frameWidth, int frameHeight) {
 		this.frameWidth = frameWidth;
 		this.frameHeight = frameHeight;
-		this.earthOriginX = frameWidth/2 - 128;
-		this.earthOriginY = frameHeight/2 - 128;
+		this.earthOriginX = frameWidth/2 - 32;
+		this.earthOriginY = frameHeight/2 - 32;
 	}
 
 	public void createSpaceObjects() {
 		spaceObjects.clear();
-		Earth earth = new Earth(this.earthOriginX, this.earthOriginY, frameWidth, frameHeight, 256, 256);
-		Satellite satellite = new Satellite(this.earthOriginX + 96, this.earthOriginY + 96, -7000000, 7000000, 3000, 30000, frameWidth, frameHeight, 64, 64, 100);
+		Earth earth = new Earth(this.earthOriginX, this.earthOriginY, frameWidth, frameHeight, 64, 64);
+		Satellite satellite = new Satellite(this.earthOriginX + 24, this.earthOriginY + 24, -60000000, 60000000, 7800, 7800, frameWidth, frameHeight, 32, 32, 100);
 
 		spaceObjects.add(earth);
 		spaceObjects.add(satellite);
