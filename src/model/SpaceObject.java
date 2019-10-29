@@ -166,7 +166,7 @@ public class SpaceObject implements Serializable {
 
     public double potentialEnergy() {
         if (radius != 0.0) {
-            return gravConstant*(mass)*(radius);
+            return gravConstant*(mass)*earthMass/(radius);
         }
         else {
             return 0;
@@ -174,7 +174,7 @@ public class SpaceObject implements Serializable {
     }
 
     public double kineticEnergy() {
-        return mass*(xVel*xVel + yVel*yVel/* + zVel*zVel*/)/2;
+        return mass*(xVel*xVel + yVel*yVel)/2;
     }
 
     public void move(double t) {

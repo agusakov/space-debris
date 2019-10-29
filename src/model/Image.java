@@ -6,7 +6,9 @@ public enum Image {
     EARTH(new String[] {"Earth/Earth1.png", "Earth/Earth1.png","Earth/Earth1.png","Earth/Earth1.png","Earth/Earth1.png","Earth/Earth1.png","Earth/Earth1.png","Earth/Earth1.png",
                         "Earth/Earth2.png", "Earth/Earth2.png", "Earth/Earth2.png", "Earth/Earth2.png", "Earth/Earth2.png", "Earth/Earth2.png", "Earth/Earth2.png", "Earth/Earth2.png"}),
 
-    SATELLITE(new String[] {"Satellite/satellite.png"});
+    SATELLITE(new String[] {"Satellite/satellite.png"}),
+
+    TUNGSTENDUST(new String[] {"dust.png"});
 
     private String[] displayText;
     private String[] fileNames;

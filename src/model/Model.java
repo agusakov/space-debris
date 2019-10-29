@@ -49,9 +49,11 @@ public class Model implements Serializable{
 		spaceObjects.clear();
 		Earth earth = new Earth(this.earthOriginX, this.earthOriginY, frameWidth, frameHeight, 64, 64);
 		Satellite satellite = new Satellite(this.earthOriginX + 24, this.earthOriginY + 24, -60000000, 60000000, 7800, 7800, frameWidth, frameHeight, 32, 32, 100);
+		//TungstenDust dust = new TungstenDust(this.earthOriginX, this.earthOriginY, 60, 60, frameWidth, frameHeight, 64, 64);
 
 		spaceObjects.add(earth);
 		spaceObjects.add(satellite);
+		//spaceObjects.add(dust);
 		//System.out.println("added earth in model");
 		//System.out.println(spaceObjects.size());
 	}
