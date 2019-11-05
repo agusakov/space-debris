@@ -10,6 +10,13 @@ package model;
  * provide location
  **/
 
+ /*
+- laser broom, force that comes in at a certain time
+    * accelerates & exaggerates eccentricity
+    * probably gonna need more than one hit
+- harpoon, later
+*/
+
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.awt.Point;
@@ -18,6 +25,7 @@ import java.awt.Dimension;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.io.Serializable;
+import java.lang.Math;
 
 public class SpaceObject implements Serializable {
     public final static double PI = 3.14159;
@@ -33,14 +41,14 @@ public class SpaceObject implements Serializable {
     public double zLocation;
     public double xOffset;
     public double yOffset;
-    public double zOffset;
+    public double zOffset; //don't even worry about it
 
     public ArrayList<Point> forces = new ArrayList<>();
     
     public double gravConstant = 6.674e-11; //m^3 kg^-1 s^-2
     public double earthMass = 5.972e24; //kg
     public double mass; //kg
-
+    
     public double xVel0;
     public double yVel0;
     public double xLoc0;
@@ -51,7 +59,6 @@ public class SpaceObject implements Serializable {
 
     public double xVel;
     public double yVel;
-    public double zVel;
     //public double xAccel = 2;
     //public double yAccel = 2;
     //public double accelConstant = 1;
@@ -61,11 +68,9 @@ public class SpaceObject implements Serializable {
 
     public double normX;
     public double normY;
-    public double normZ;
 
     public int originX;
     public int originY;
-    public int originZ = 0;
     
     public Image spaceObjectImage;
     public int frameCount;
@@ -88,15 +93,6 @@ public class SpaceObject implements Serializable {
         }
     }
 
-   /* public double normZ(double z, double radius){
-        if (radius != 0.0) {
-            return z/radius;
-        }
-        else {
-            return 0;
-        }
-    }*/
-
     public double xVel(double normX, double gravAccelScalar){
         return this.xVel + normX*gravAccelScalar*100;
     }
@@ -104,10 +100,6 @@ public class SpaceObject implements Serializable {
     public double yVel(double normY, double gravAccelScalar){
         return this.yVel + normY*gravAccelScalar*100;
     }
-
-  /*  public double zVel(double normZ, double gravAccelScalar){
-        return this.zVel + normZ*gravAccelScalar;
-    }*/
 
     public double xPos(double x, double xVel) {
         return x + xVel*100;
@@ -117,32 +109,30 @@ public class SpaceObject implements Serializable {
         return y + yVel*100;
     }
 
-   /* public double zPos(double z, double zVel) {
-        return z + zVel;
-    }*/
-
-    /*public double angular(double x, double y){
-        return Math.atan2(x, y);
-    }*/
-
     public double radius(double x, double y/*, double z*/) {
         return Math.sqrt(x*x + y*y/* + z*z*/);
     }
-
-    /*public double theta(double t) {
-        return theta + angVel*t + 1/2*angAccel*t*t;
-    }
-
-    public double angVel(double t) {
-        return angVel + theta*angAccel;
-    }*/
     
     public double gravAccelScalar(double radius) {
         if (radius != 0.0) {
-            return -gravConstant*earthMass*mass/(radius*radius);
+            return -gravConstant*earthMass/(radius*radius); //see if mass needs to be here
         }
         else {
             return 0;
+        }
+    }
+
+    public double theta(double x, double y) {
+        if (x != 0) {
+            return Math.atan2(x, y);
+        }
+        else {
+            if (y < 0) {
+                return PI/2;
+            }
+            else {
+                return -PI/2;
+            }
         }
     }
 
@@ -185,30 +175,31 @@ public class SpaceObject implements Serializable {
         this.radius = radius(this.xOffset, this.yOffset);
         System.out.println("radius:" + radius);
         this.gravAccelScalar = gravAccelScalar(radius);
-        System.out.println("gravAccelScalar:" + gravAccelScalar);
+        //System.out.println("gravAccelScalar:" + gravAccelScalar);
         this.normX = normX(this.xOffset, radius);
-        System.out.println("normX:" + normX);
+        //System.out.println("normX:" + normX);
         this.normY = normY(this.yOffset, radius);
-        System.out.println("normY:" + normY);
+        //System.out.println("normY:" + normY);
         //this.normZ = normZ(this.zOffset, radius);
         //System.out.println("normZ:" + normZ);
         this.xVel = xVel(normX, gravAccelScalar);
-        System.out.println("xVel:" + xVel);
+        //System.out.println("xVel:" + xVel);
         this.yVel = yVel(normY, gravAccelScalar);
-        System.out.println("yVel:" + yVel);
+        //System.out.println("yVel:" + yVel);
         //this.yVel = zVel(normZ, gravAccelScalar);
         //System.out.println("zVel:" + zVel);
         this.kineticEnergy = kineticEnergy();
-        double potentialEnergy = potentialEnergy();
+        //double potentialEnergy = potentialEnergy();
         System.out.println("kinetic:" + kineticEnergy);
         System.out.println("potential:" + potentialEnergy); 
-        double totalEnergy = kineticEnergy + potentialEnergy;
-        System.out.println("Total energy:" + totalEnergy);
+        //double totalEnergy = kineticEnergy + potentialEnergy;
+        //System.out.println("Total energy:" + totalEnergy);
         this.setX(this.xPos(this.xOffset, this.xVel));
         this.setY(this.yPos(this.yOffset, this.yVel));
         //this.setZ(this.zPos(this.zOffset, this.zVel));
-        System.out.println("xLocation: " + xLocation + " yLocation: " + yLocation);
-        System.out.println("xOffset: " + xOffset + " yOffset: " + yOffset);
+        System.out.println("x: " + xOffset);
+        System.out.println("y: " + yOffset);
+        System.out.println("theta: " + this.theta(xOffset, yOffset));
     }
 	
 	public double getX() {
@@ -219,25 +210,16 @@ public class SpaceObject implements Serializable {
 		return this.yLocation;
     }
 
-    public double getZ() {
-		return this.zLocation;
-    }
-
     public void setX(double x) {
-        this.xLocation = (x/20e4 + originX);
+        this.xLocation = (x/10e4 + originX);
         System.out.println("originX:" + this.originX);
         System.out.println("setting xLocation:" + this.xLocation);
         this.xOffset = x;
     }
 
     public void setY(double y) {
-        this.yLocation = (originY + y/20e4);
+        this.yLocation = (originY + y/10e4);
         this.yOffset = y;
-    }
-
-    public void setZ(double z) {
-        this.zLocation = (originZ + z);
-        this.zOffset = z;
     }
 
     public int getFrameCount() {
