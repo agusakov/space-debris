@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.io.Serializable;
 
 
-public class Satellite extends SpaceObject implements Serializable {
+public class CircOrbSatellite extends SpaceObject implements Serializable {
 
 	/*private static ArrayList<String> characteristicsCorrect = new ArrayList<String>( Arrays.asList("gray","black eyes","fur","4 feet"));
 	private static ArrayList<String> characteristicsIncorrect = new ArrayList<String>(Arrays.asList("gills","1 leg","hard shell","wings"));*/
@@ -22,7 +22,7 @@ public class Satellite extends SpaceObject implements Serializable {
 	* @param xBoundary x-position where main environment ends on screen
 	* @param yBoundary y-position where secondary environments collide on screen
 	*/
-	public Satellite(int originX, int originY, int xOffset, int yOffset, int xVel, int yVel, int frameWidth, int frameHeight, int imgWidth, int imgHeight, double mass, double timeStep) {
+	public CircOrbSatellite(int originX, int originY, int xOffset, int yOffset, int xVel, int yVel, int frameWidth, int frameHeight, int imgWidth, int imgHeight, double mass) {
 		this.name = "Earth";
 		//this.xLoc0 = xOffset + originX;
 		//this.yLoc0 = yOffset + originY;
@@ -31,9 +31,9 @@ public class Satellite extends SpaceObject implements Serializable {
 		this.mass = mass;
 		
 		//System.out.println("initial x:" + (xOffset + originX));
-		this.xLocation = xOffset/10e4 + originX;
+		this.xLocation = xOffset/20e4 + originX;
 		//System.out.println("initial x:" + this.xLocation);
-		this.yLocation = yOffset/10e4 + originY;
+		this.yLocation = yOffset/20e4 + originY;
 		//System.out.println("initial y:" + this.yLocation);
         
         this.xOffset = xOffset;
@@ -54,7 +54,6 @@ public class Satellite extends SpaceObject implements Serializable {
 		this.moves = true;
 		this.spaceObjectImage = Image.SATELLITE;
 		this.frameCount = 1;
-		this.timeStep = timeStep;
 		System.out.println("initial x:" + this.xLocation);
 		System.out.println("initial y:" + this.yLocation);
 	}

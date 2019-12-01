@@ -45,10 +45,17 @@ public class SpaceObject implements Serializable {
 
     public ArrayList<Point> forces = new ArrayList<>();
     
+<<<<<<< HEAD
+    public double gravConstant = 6.674e-11; // m^3/(kg^2 s^2)
+    public double earthMass = 5.972e24; // kg
+    public double mass; //kg
+
+=======
     public double gravConstant = 6.674e-11; //m^3 kg^-1 s^-2
     public double earthMass = 5.972e24; //kg
     public double mass; //kg
     
+>>>>>>> real-values
     public double xVel0;
     public double yVel0;
     public double xLoc0;
@@ -96,19 +103,35 @@ public class SpaceObject implements Serializable {
     }
 
     public double xVel(double normX, double gravAccelScalar){
+<<<<<<< HEAD
+        return this.xVel + normX*gravAccelScalar*10e-3;
+    }
+
+    public double yVel(double normY, double gravAccelScalar){
+        return this.yVel + normY*gravAccelScalar*10e-3;
+=======
         return this.xVel + normX*gravAccelScalar*timeStep;
     }
 
     public double yVel(double normY, double gravAccelScalar){
         return this.yVel + normY*gravAccelScalar*timeStep;
+>>>>>>> real-values
     }
 
     public double xPos(double x, double xVel) {
+<<<<<<< HEAD
+        return x + xVel*10e-3;
+    }
+
+    public double yPos(double y, double yVel) {
+        return y + yVel*10e-3;
+=======
         return x + xVel*timeStep;
     }
 
     public double yPos(double y, double yVel) {
         return y + yVel*timeStep;
+>>>>>>> real-values
     }
 
     public double radius(double x, double y/*, double z*/) {
@@ -208,10 +231,16 @@ public class SpaceObject implements Serializable {
         System.out.println("Total energy: " + totalEnergy + " time: " + t);
         this.setX(this.xPos(this.xOffset, this.xVel));
         this.setY(this.yPos(this.yOffset, this.yVel));
+<<<<<<< HEAD
+        //this.setZ(this.zPos(this.zOffset, this.zVel));
+        //System.out.println("xLocation: " + xLocation + " yLocation: " + yLocation);
+        //System.out.println("xOffset: " + xOffset + " yOffset: " + yOffset);
+=======
         //System.out.println("x: " + xOffset);
         //System.out.println("y: " + yOffset);
         //System.out.println("theta: " + this.theta(xOffset, yOffset));
         this.moves = this.isMoving();
+>>>>>>> real-values
     }
 	
 	public double getX() {
@@ -223,14 +252,24 @@ public class SpaceObject implements Serializable {
     }
 
     public void setX(double x) {
+<<<<<<< HEAD
+        this.xLocation = (x*10e-3 + originX);
+       // System.out.println("originX:" + this.originX);
+        System.out.println("setting xLocation:" + this.xLocation);
+=======
         this.xLocation = (x/10e4 + originX);
        // System.out.println("originX:" + this.originX);
         //System.out.println("setting xLocation:" + this.xLocation);
+>>>>>>> real-values
         this.xOffset = x;
     }
 
     public void setY(double y) {
+<<<<<<< HEAD
+        this.yLocation = (originY + y*10e-3);
+=======
         this.yLocation = (originY + y/10e4);
+>>>>>>> real-values
         this.yOffset = y;
     }
 

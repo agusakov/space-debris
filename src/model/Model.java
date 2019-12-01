@@ -10,6 +10,12 @@ package model;
  * provide location
  **/
 
+/*
+- tungsten dust, force that comes in at a certain radius
+- laser broom, force that comes in at a certain time
+- harpoon, later
+*/
+
 import java.util.ArrayList;
 import java.awt.Point;
 import java.util.Iterator;
@@ -41,17 +47,21 @@ public class Model implements Serializable{
 	public Model(int frameWidth, int frameHeight) {
 		this.frameWidth = frameWidth;
 		this.frameHeight = frameHeight;
-		this.earthOriginX = frameWidth/2 - 128;
-		this.earthOriginY = frameHeight/2 - 128;
+		this.earthOriginX = frameWidth/2 - 32;
+		this.earthOriginY = frameHeight/2 - 32;
 	}
 
 	public void createSpaceObjects() {
 		spaceObjects.clear();
-		Earth earth = new Earth(this.earthOriginX, this.earthOriginY, frameWidth, frameHeight, 256, 256);
-		Satellite satellite = new Satellite(this.earthOriginX + 96, this.earthOriginY + 96, -100, 100, 10, 0, frameWidth, frameHeight, 64, 64, 100);
+		Earth earth = new Earth(this.earthOriginX, this.earthOriginY, frameWidth, frameHeight, 64, 64);
+		Satellite satellite = new Satellite(this.earthOriginX + 24, this.earthOriginY + 24, 0, 35786000, 3138, 0, frameWidth, frameHeight, 32, 32, 100, 100);
+		//TungstenDust dust = new TungstenDust(this.earthOriginX, this.earthOriginY, 60, 60, frameWidth, frameHeight, 64, 64);
+		//SmallDebris smalldebris = new SmallDebris(this.earthOriginX + 24, this.earthOriginY + 24, 0, 7120000, 7777, 0, frameWidth, frameHeight);
 
 		spaceObjects.add(earth);
 		spaceObjects.add(satellite);
+		//spaceObjects.add(smalldebris);
+		//spaceObjects.add(dust);
 		//System.out.println("added earth in model");
 		//System.out.println(spaceObjects.size());
 	}
