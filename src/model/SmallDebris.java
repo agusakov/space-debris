@@ -39,7 +39,7 @@ public class SmallDebris extends SpaceObject implements Serializable {
         * 5.23599e-7 m^3 volume of space debris
         * ~1.5 g/m^3
     */
-	public SmallDebris(int originX, int originY, int xOffset, int yOffset, int xVel, int yVel, int frameWidth, int frameHeight) {
+	public SmallDebris(int originX, int originY, int xOffset, int yOffset, int xVel, int yVel, int frameWidth, int frameHeight, double timeStep) {
 		this.name = "Earth";
 		//this.xLoc0 = xOffset + originX;
 		//this.yLoc0 = yOffset + originY;
@@ -69,7 +69,8 @@ public class SmallDebris extends SpaceObject implements Serializable {
 		//this.yAccel = this.yAccel(0);
 		//this.accelConstant = Math.sqrt(xAccel*xAccel + yAccel*yAccel);
         
-		//this.dir = d;
+        //this.dir = d;
+        this.timeStep = timeStep;
 		this.frameWidth = frameWidth;
 		this.frameHeight = frameHeight;
 		this.imgWidth = 16;
@@ -82,11 +83,11 @@ public class SmallDebris extends SpaceObject implements Serializable {
     }
 
     public double xVel(double normX, double normY, double gravAccelScalar, double dragAccelScalar) {
-        return this.xVel + (normX*gravAccelScalar + normY*dragAccelScalar)*100;
+        return this.xVel + (normX*gravAccelScalar + normY*dragAccelScalar)*timeStep;
     }  
     
     public double yVel(double normY, double normX, double gravAccelScalar, double dragAccelScalar) {
-        return this.yVel + (normY*gravAccelScalar + normX*dragAccelScalar)*100;
+        return this.yVel + (normY*gravAccelScalar + normX*dragAccelScalar)*timeStep;
     }  
 
     public boolean checkDrag() {
