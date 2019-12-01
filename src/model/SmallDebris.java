@@ -39,7 +39,13 @@ public class SmallDebris extends SpaceObject implements Serializable {
         * 5.23599e-7 m^3 volume of space debris
         * ~1.5 g/m^3
     */
-	public SmallDebris(int originX, int originY, int xOffset, int yOffset, int xVel, int yVel, int frameWidth, int frameHeight) {
+
+    /*
+    - Figure out max time step by looking at cons. of energy
+    - Figure out realistic value of ro (cause significant deceleration - dependent on max time step)
+    */
+    
+	public SmallDebris(int originX, int originY, int xOffset, int yOffset, int xVel, int yVel, int frameWidth, int frameHeight, double timeStep) {
 		this.name = "Earth";
 		//this.xLoc0 = xOffset + originX;
 		//this.yLoc0 = yOffset + originY;
@@ -47,9 +53,10 @@ public class SmallDebris extends SpaceObject implements Serializable {
         this.originY = originY;
         this.mass = 7.854e-7;
         this.dragAccelScalar = 0; 
+        this.timeStep = timeStep;
         
         this.inDust = false;
-        this.dustDensity = 19300000; //g cc
+        this.dustDensity = 500;//19300000; //g cc
         this.crossSecArea = 7.853982e-5;
         this.dragCoeff = 0.2;
 		
@@ -77,16 +84,16 @@ public class SmallDebris extends SpaceObject implements Serializable {
 		this.moves = true;
 		this.spaceObjectImage = Image.SMALLDEBRIS;
 		this.frameCount = 1;
-		System.out.println("initial x:" + this.xLocation);
-		System.out.println("initial y:" + this.yLocation);
+		//System.out.println("initial x:" + this.xLocation);
+		//System.out.println("initial y:" s+ this.yLocation);
     }
 
     public double xVel(double normX, double normY, double gravAccelScalar, double dragAccelScalar) {
-        return this.xVel + (normX*gravAccelScalar + normY*dragAccelScalar)*100;
+        return this.xVel + (-this.xVel*this.xVel*dragAccelScalar + normX*gravAccelScalar)*timeStep;
     }  
     
     public double yVel(double normY, double normX, double gravAccelScalar, double dragAccelScalar) {
-        return this.yVel + (normY*gravAccelScalar + normX*dragAccelScalar)*100;
+        return this.yVel + (-this.yVel*this.yVel*dragAccelScalar + normY*gravAccelScalar)*timeStep;
     }  
 
     public boolean checkDrag() {
@@ -100,7 +107,7 @@ public class SmallDebris extends SpaceObject implements Serializable {
     
     public double dragAccelScalar() {
         if (this.inDust == true) {
-            return -(1/2*dustDensity*(xVel*xVel + yVel*yVel)*dragCoeff*crossSecArea)/mass;
+            return (1/2*dustDensity*dragCoeff*crossSecArea)/mass;
         }
         else {
             return 0;
@@ -117,16 +124,19 @@ public class SmallDebris extends SpaceObject implements Serializable {
         this.dragAccelScalar = dragAccelScalar();
         this.normX = normX(this.xOffset, radius);
         this.normY = normY(this.yOffset, radius);
-        this.xVel = xVel(normX, normY, gravAccelScalar, dragAccelScalar);
-        this.yVel = yVel(normY, normX, gravAccelScalar, dragAccelScalar);
+        this.xVel = xVel(normX, normY, gravAccelScalar, this.dragAccelScalar);
+        this.yVel = yVel(normY, normX, gravAccelScalar, this.dragAccelScalar);
         this.kineticEnergy = kineticEnergy();
-        System.out.println("kinetic:" + kineticEnergy);
-        System.out.println("potential:" + potentialEnergy); 
+        double potentialEnergy = potentialEnergy();
+        //System.out.println("kinetic:" + kineticEnergy);
+        //System.out.println("potential:" + potentialEnergy); 
+        double totalEnergy = kineticEnergy + potentialEnergy;
+        System.out.println("Total energy: " + totalEnergy + " time: " + t);
         this.setX(this.xPos(this.xOffset, this.xVel));
         this.setY(this.yPos(this.yOffset, this.yVel));
-        System.out.println("x: " + xOffset);
-        System.out.println("y: " + yOffset);
-        System.out.println("theta: " + this.theta(xOffset, yOffset));
+        //System.out.println("x: " + xOffset);
+        //System.out.println("y: " + yOffset);
+        //System.out.println("theta: " + this.theta(xOffset, yOffset));
     }
 
 }

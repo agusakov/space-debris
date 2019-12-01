@@ -144,7 +144,7 @@ public class View extends JPanel{
 	}
 
 	void drawImage(Graphics g, Image i, int index, int x, int y, int width, int height){
-		System.out.println("image width: " + width);
+		//System.out.println("image width: " + width);
 		g.drawImage(images.get(i).get(index), (int) (x*worldScale), (int) (y*worldScale), (int) (width*worldScale), (int) (height*worldScale), this);
 	}
 	

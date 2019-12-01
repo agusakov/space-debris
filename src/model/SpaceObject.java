@@ -71,6 +71,8 @@ public class SpaceObject implements Serializable {
 
     public int originX;
     public int originY;
+
+    public double timeStep;
     
     public Image spaceObjectImage;
     public int frameCount;
@@ -94,19 +96,24 @@ public class SpaceObject implements Serializable {
     }
 
     public double xVel(double normX, double gravAccelScalar){
-        return this.xVel + normX*gravAccelScalar*100;
+        double dy1 = timeStep * normX * gravAccelScalar;
+        double dy2 = timeStep * (timeStep / 2.0 + this.xVel + dy1 / 2.0);
+        double dy3 = timeStep * (timeStep / 2.0 + this.xVel + dy2 / 2.0);
+        double dy4 = timeStep * yp_func.apply(t[n] + dt, y[n] + dy3);
+        y[n + 1] = y[n] + (dy1 + 2.0 * (dy2 + dy3) + dy4) / 6.0;
+        return this.xVel + normX*gravAccelScalar*timeStep;
     }
 
     public double yVel(double normY, double gravAccelScalar){
-        return this.yVel + normY*gravAccelScalar*100;
+        return this.yVel + normY*gravAccelScalar*timeStep;
     }
 
     public double xPos(double x, double xVel) {
-        return x + xVel*100;
+        return x + xVel*timeStep;
     }
 
     public double yPos(double y, double yVel) {
-        return y + yVel*100;
+        return y + yVel*timeStep;
     }
 
     public double radius(double x, double y/*, double z*/) {
@@ -167,13 +174,23 @@ public class SpaceObject implements Serializable {
         return mass*(xVel*xVel + yVel*yVel)/2;
     }
 
+    public boolean isMoving() {
+        if (radius > 6371000) {
+            return true;
+        }
+        else {
+            System.out.println("space object has crashed");
+            return false;
+        }
+    }
+
     public void move(double t) {
-        System.out.println("time t:" + t);
+        //System.out.println("time t:" + t);
         //this.xAccel = this.xAccel(t);
         //this.yAccel = this.yAccel(t);
         //this.angAccel = this.angAccel(t);
         this.radius = radius(this.xOffset, this.yOffset);
-        System.out.println("radius:" + radius);
+        //System.out.println("radius:" + radius);
         this.gravAccelScalar = gravAccelScalar(radius);
         //System.out.println("gravAccelScalar:" + gravAccelScalar);
         this.normX = normX(this.xOffset, radius);
@@ -189,17 +206,17 @@ public class SpaceObject implements Serializable {
         //this.yVel = zVel(normZ, gravAccelScalar);
         //System.out.println("zVel:" + zVel);
         this.kineticEnergy = kineticEnergy();
-        //double potentialEnergy = potentialEnergy();
-        System.out.println("kinetic:" + kineticEnergy);
-        System.out.println("potential:" + potentialEnergy); 
-        //double totalEnergy = kineticEnergy + potentialEnergy;
-        //System.out.println("Total energy:" + totalEnergy);
+        double potentialEnergy = potentialEnergy();
+        //System.out.println("kinetic:" + kineticEnergy);
+        //System.out.println("potential:" + potentialEnergy); 
+        double totalEnergy = kineticEnergy + potentialEnergy;
+        System.out.println("Total energy: " + totalEnergy + " time: " + t);
         this.setX(this.xPos(this.xOffset, this.xVel));
         this.setY(this.yPos(this.yOffset, this.yVel));
-        //this.setZ(this.zPos(this.zOffset, this.zVel));
-        System.out.println("x: " + xOffset);
-        System.out.println("y: " + yOffset);
-        System.out.println("theta: " + this.theta(xOffset, yOffset));
+        //System.out.println("x: " + xOffset);
+        //System.out.println("y: " + yOffset);
+        //System.out.println("theta: " + this.theta(xOffset, yOffset));
+        this.moves = this.isMoving();
     }
 	
 	public double getX() {
@@ -212,8 +229,8 @@ public class SpaceObject implements Serializable {
 
     public void setX(double x) {
         this.xLocation = (x/10e4 + originX);
-        System.out.println("originX:" + this.originX);
-        System.out.println("setting xLocation:" + this.xLocation);
+       // System.out.println("originX:" + this.originX);
+        //System.out.println("setting xLocation:" + this.xLocation);
         this.xOffset = x;
     }
 

@@ -10,7 +10,9 @@ public enum Image {
 
     TUNGSTENDUST(new String[] {"dust.png"}),
     
-    SMALLDEBRIS(new String[] {"smalldebris.png"});
+    SMALLDEBRIS(new String[] {"smalldebris.png"}),
+
+    LASERDEBRIS(new String[] {"Satellite/satellite.png"});
 
     private String[] displayText;
     private String[] fileNames;
