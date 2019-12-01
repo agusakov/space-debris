@@ -17,6 +17,10 @@ package model;
 - harpoon, later
 */
 
+/* Runge-Kutta - maybe change from time dependency to dependency on velocity? 
+*/
+
+
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.awt.Point;
@@ -96,7 +100,7 @@ public class SpaceObject implements Serializable {
     }
 
     public double xVel(double normX, double gravAccelScalar){
-        double dy1 = timeStep * normX * gravAccelScalar;
+        double dy1 = timeStep * (this.xVel + normX * gravAccelScalar);
         double dy2 = timeStep * (timeStep / 2.0 + this.xVel + dy1 / 2.0);
         double dy3 = timeStep * (timeStep / 2.0 + this.xVel + dy2 / 2.0);
         double dy4 = timeStep * (timeStep + this.xVel + dy3);
@@ -104,7 +108,7 @@ public class SpaceObject implements Serializable {
     }
 
     public double yVel(double normY, double gravAccelScalar){
-        double dy1 = timeStep * normY * gravAccelScalar;
+        double dy1 = timeStep * (this.yVel + normY * gravAccelScalar);
         double dy2 = timeStep * (timeStep / 2.0 + this.yVel + dy1 / 2.0);
         double dy3 = timeStep * (timeStep / 2.0 + this.yVel + dy2 / 2.0);
         double dy4 = timeStep * (timeStep + this.yVel + dy3);
@@ -112,7 +116,7 @@ public class SpaceObject implements Serializable {
     }
 
     public double xPos(double x, double xVel) {
-        double dy1 = timeStep * xVel;
+        double dy1 = timeStep * (x + xVel);
         double dy2 = timeStep * (timeStep / 2.0 + x + dy1 / 2.0);
         double dy3 = timeStep * (timeStep / 2.0 + x + dy2 / 2.0);
         double dy4 = timeStep * (timeStep + x + dy3);
@@ -120,7 +124,7 @@ public class SpaceObject implements Serializable {
     }
 
     public double yPos(double y, double yVel) {
-        double dy1 = timeStep * yVel;
+        double dy1 = timeStep * (y + yVel);
         double dy2 = timeStep * (timeStep / 2.0 + y + dy1 / 2.0);
         double dy3 = timeStep * (timeStep / 2.0 + y + dy2 / 2.0);
         double dy4 = timeStep * (timeStep + y + dy3);
