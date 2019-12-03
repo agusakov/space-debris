@@ -54,7 +54,7 @@ public class Model implements Serializable{
 	public void createSpaceObjects() {
 		spaceObjects.clear();
 		Earth earth = new Earth(this.earthOriginX, this.earthOriginY, frameWidth, frameHeight, 64, 64);
-		Satellite satellite = new Satellite(this.earthOriginX + 24, this.earthOriginY + 24, 0, 35786000, 3138, 0, frameWidth, frameHeight, 32, 32, 100, 10e-3);
+		Satellite satellite = new Satellite(this.earthOriginX + 24, this.earthOriginY + 24, 0, 35786000, 3138, 0, frameWidth, frameHeight, 32, 32, 100, 1);
 		//TungstenDust dust = new TungstenDust(this.earthOriginX, this.earthOriginY, 60, 60, frameWidth, frameHeight, 64, 64, 10e-5);
 		//SmallDebris smalldebris = new SmallDebris(this.earthOriginX + 24, this.earthOriginY + 24, 0, 7120000, 7777, 0, frameWidth, frameHeight, 10e-5);
 		//LaserDebris laserdebris = new LaserDebris(this.earthOriginX + 24, this.earthOriginY + 24, 0, 35786000, 3138, 0, 64, 64, 100, 10e-5);

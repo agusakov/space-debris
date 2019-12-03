@@ -100,34 +100,34 @@ public class SpaceObject implements Serializable {
     }
 
     public double xVel(double normX, double gravAccelScalar){
-        double dy1 = timeStep * (this.xVel + normX * gravAccelScalar);
-        double dy2 = timeStep * (timeStep / 2.0 + this.xVel + dy1 / 2.0);
-        double dy3 = timeStep * (timeStep / 2.0 + this.xVel + dy2 / 2.0);
-        double dy4 = timeStep * (timeStep + this.xVel + dy3);
+        double dy1 = timeStep * (normX * gravAccelScalar);
+        double dy2 = timeStep * (normX * gravAccelScalar + dy1 / 2.0);
+        double dy3 = timeStep * (normX * gravAccelScalar + dy2 / 2.0);
+        double dy4 = timeStep * (normX * gravAccelScalar + dy3);
         return this.xVel + (dy1 + 2.0 * (dy2 + dy3) + dy4) / 6.0;
     }
 
     public double yVel(double normY, double gravAccelScalar){
-        double dy1 = timeStep * (this.yVel + normY * gravAccelScalar);
-        double dy2 = timeStep * (timeStep / 2.0 + this.yVel + dy1 / 2.0);
-        double dy3 = timeStep * (timeStep / 2.0 + this.yVel + dy2 / 2.0);
-        double dy4 = timeStep * (timeStep + this.yVel + dy3);
+        double dy1 = timeStep * (normY * gravAccelScalar);
+        double dy2 = timeStep * (normY * gravAccelScalar + dy1 / 2.0);
+        double dy3 = timeStep * (normY * gravAccelScalar + dy2 / 2.0);
+        double dy4 = timeStep * (normY * gravAccelScalar + dy3);
         return this.yVel + (dy1 + 2.0 * (dy2 + dy3) + dy4) / 6.0;
     }
 
     public double xPos(double x, double xVel) {
-        double dy1 = timeStep * (x + xVel);
-        double dy2 = timeStep * (timeStep / 2.0 + x + dy1 / 2.0);
-        double dy3 = timeStep * (timeStep / 2.0 + x + dy2 / 2.0);
-        double dy4 = timeStep * (timeStep + x + dy3);
+        double dy1 = timeStep * (xVel);
+        double dy2 = timeStep * (xVel + dy1 / 2.0);
+        double dy3 = timeStep * (xVel + dy2 / 2.0);
+        double dy4 = timeStep * (xVel + dy3);
         return x + (dy1 + 2.0 * (dy2 + dy3) + dy4) / 6.0;
     }
 
     public double yPos(double y, double yVel) {
-        double dy1 = timeStep * (y + yVel);
-        double dy2 = timeStep * (timeStep / 2.0 + y + dy1 / 2.0);
-        double dy3 = timeStep * (timeStep / 2.0 + y + dy2 / 2.0);
-        double dy4 = timeStep * (timeStep + y + dy3);
+        double dy1 = timeStep * (yVel);
+        double dy2 = timeStep * (yVel + dy1 / 2.0);
+        double dy3 = timeStep * (yVel + dy2 / 2.0);
+        double dy4 = timeStep * (yVel + dy3);
         return y + (dy1 + 2.0 * (dy2 + dy3) + dy4) / 6.0;
     }
 
@@ -215,7 +215,6 @@ public class SpaceObject implements Serializable {
         //this.normZ = normZ(this.zOffset, radius);
         //System.out.println("normZ:" + normZ);
         this.xVel = xVel(normX, gravAccelScalar);
-        //System.out.println("xVel:" + xVel);
         this.yVel = yVel(normY, gravAccelScalar);
         //System.out.println("yVel:" + yVel);
         //this.yVel = zVel(normZ, gravAccelScalar);
